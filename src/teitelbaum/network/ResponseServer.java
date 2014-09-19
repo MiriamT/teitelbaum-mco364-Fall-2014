@@ -19,6 +19,8 @@ public class ResponseServer
 		{
 			Socket socket = serverSocket.accept(); //to listen
 
+			//need sep thread for the rest of this stuff
+
 			//read
 			InputStream in = socket.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));

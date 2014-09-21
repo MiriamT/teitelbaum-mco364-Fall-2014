@@ -20,7 +20,7 @@ public class ResponseServer
 			Socket socket = serverSocket.accept(); //to listen
 
 			//need sep thread for the rest of this stuff
-
+			//hmm why no link to git?
 			//read
 			InputStream in = socket.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));

@@ -20,6 +20,8 @@ public class ChatterBoxUI extends JFrame
 	private JTextField textbox;
 	private JButton sendButton;
 	private Socket socket;
+	private InputStream in;
+	private OutputStream out;
 
 	public ChatterBoxUI() throws IOException
 	{
@@ -28,13 +30,20 @@ public class ChatterBoxUI extends JFrame
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		System.out.println("b4 socket");
-		socket = new Socket("10.41.116.67", 8080);
-		final InputStream in = socket.getInputStream();
-		final OutputStream out = socket.getOutputStream();
+		socket = new Socket("192.168.117.129", 8080);
+		
+		
+		
+		in = socket.getInputStream();
+		out = socket.getOutputStream();
 		System.out.println("after socket");
 
 		chatText = new JTextArea();
 		chatText.setText("Welcome to ChatterBox!");
+		
+		ChatConnThread conn = new ChatConnThread(socket, chatText);
+		conn.start();
+		
 		textbox = new JTextField(60);
 		sendButton = new JButton("send");
 		sendButton.addActionListener(new ActionListener()
@@ -49,7 +58,7 @@ public class ChatterBoxUI extends JFrame
 					// send to server
 					try
 					{
-						out.write(text.getBytes());
+						out.write((text + "\n").getBytes());
 						out.flush(); // sends out the data
 					}
 					catch (IOException e)
@@ -57,7 +66,7 @@ public class ChatterBoxUI extends JFrame
 						e.printStackTrace();
 					}
 
-					chatText.setText(chatText.getText() + "\n" + text);
+					chatText.setText(chatText.getText() + "\nMe: " + text);
 					textbox.setText("");
 				}
 			}
@@ -74,7 +83,6 @@ public class ChatterBoxUI extends JFrame
 
 	public static void main(String[] args)
 	{
-		
 		try
 		{
 			ChatterBoxUI ui = new ChatterBoxUI();

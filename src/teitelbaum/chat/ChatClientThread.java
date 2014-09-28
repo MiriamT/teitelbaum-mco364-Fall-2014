@@ -4,20 +4,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
 
 import javax.swing.JTextArea;
 
-public class ChatConnThread extends Thread
+public class ChatClientThread extends Thread
 {
 	private Socket socket;
+	private ChatterBoxUI chatUI;
 	private JTextArea chatbox;
 
-	public ChatConnThread(Socket s, JTextArea textarea)
+	public ChatClientThread(ChatterBoxUI UI)
 	{
-		socket = s;
-		chatbox = textarea;
+		chatUI = UI;
+		chatbox = UI.getChatText();
 	}
 
 	@Override
@@ -27,6 +28,10 @@ public class ChatConnThread extends Thread
 		try
 		{
 			// read
+			socket = new Socket("192.168.117.129", 8080);
+			// once connection is made, send it back to the UI
+			chatUI.setSocketComponets(socket);
+
 			InputStream in = socket.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
@@ -40,12 +45,22 @@ public class ChatConnThread extends Thread
 					chatbox.setText(chatbox.getText() + "\nOther: " + line);
 				}
 			}
-			
+			// not sure if i need this to allow time for client to send messages...
 			sleep(1000);
 		}
-		catch (IOException | InterruptedException e)
+		catch (InterruptedException | IOException e)
 		{
-			e.printStackTrace();
+			if (e instanceof ConnectException)
+			{
+				// i want to see if i can use this to "restart" thread and still maintain connection with UI
+				// **what happens to the failed threads?
+				chatbox.setText(chatbox.getText() + "\nConnection timeout - restarting connection");
+				new ChatClientThread(chatUI).start();
+			}
+			else
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 }

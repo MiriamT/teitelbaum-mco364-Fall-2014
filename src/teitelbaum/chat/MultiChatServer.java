@@ -18,7 +18,7 @@ public class MultiChatServer
 		MessageSender sender = new MessageSender(messages, sockets);
 		sender.start();
 		
-		while (true )
+		while (true)
 		{
 			Socket socket = serverSocket.accept();
 			sockets.add(socket);

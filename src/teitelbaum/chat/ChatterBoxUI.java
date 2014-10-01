@@ -53,7 +53,7 @@ public class ChatterBoxUI extends JFrame
 						{
 							out.write((text + "\n").getBytes()); // need the \n because readLine() blocks until it receives it
 							out.flush(); // sends out the data
-							chatText.setText(chatText.getText() + "\nMe: " + text);
+							//chatText.setText(chatText.getText() + "\nMe: " + text);
 							textbox.setText("");
 						}
 						catch (IOException e)

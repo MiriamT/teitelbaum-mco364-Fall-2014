@@ -29,7 +29,7 @@ public class ChatClientThread extends Thread
 		try
 		{
 			// read
-			socket = new Socket("localhost", 8000);
+			socket = new Socket("192.168.117.107", 9097);
 			// once connection is made, send it back to the UI
 			chatUI.setSocketComponets(socket);
 

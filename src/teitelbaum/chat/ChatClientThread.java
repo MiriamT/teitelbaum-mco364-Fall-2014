@@ -43,7 +43,7 @@ public class ChatClientThread extends Thread
 			{
 				if (line != null)
 				{
-					chatbox.setText(chatbox.getText() + "\nOther: " + line);
+					chatbox.setText(chatbox.getText() + "\n" + line);
 				}
 			}
 			// not sure if i need this to allow time for client to send messages...

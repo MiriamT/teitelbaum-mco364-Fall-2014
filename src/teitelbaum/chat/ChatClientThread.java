@@ -29,7 +29,7 @@ public class ChatClientThread extends Thread
 		try
 		{
 			// read
-			socket = new Socket("localhost", 9097);
+			socket = new Socket("192.168.117.107", 3773);
 			// once connection is made, send it back to the UI
 			chatUI.setSocketComponets(socket);
 
@@ -50,19 +50,15 @@ public class ChatClientThread extends Thread
 			// not sure if i need this to allow time for client to send messages...
 			sleep(1000);
 		}
-		catch (InterruptedException | IOException e)
+		catch ( SocketException e ) 
 		{
-			if (e instanceof ConnectException || e instanceof SocketException)
-			{
-				// i want to see if i can use this to "restart" thread and still maintain connection with UI
-				// **what happens to the failed threads?
-				chatbox.setText(chatbox.getText() + "\nConnection timeout - restarting connection");
-				new ChatClientThread(chatUI).start();
-			}
-			else
-			{
-				e.printStackTrace();
-			}
+			//"restart" thread and still maintain connection with UI by passing same chatUI variable
+			chatbox.setText(chatbox.getText() + "\nConnection timeout - restarting connection");
+			new ChatClientThread(chatUI).start();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
 		}
 	}
 }

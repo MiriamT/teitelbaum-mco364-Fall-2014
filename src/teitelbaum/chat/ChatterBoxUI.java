@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.text.DefaultCaret;
 
 public class ChatterBoxUI extends JFrame
 {
@@ -32,8 +33,11 @@ public class ChatterBoxUI extends JFrame
 		// add chat text display
 		chatText = new JTextArea();
 		chatText.setText("Welcome to ChatterBox!");
-		JScrollPane scroll = new JScrollPane(chatText);
-		add(scroll, BorderLayout.CENTER);
+		//to enable the textarea to scroll to end automatically:
+		DefaultCaret caret = (DefaultCaret)chatText.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		
+		add(new JScrollPane(chatText), BorderLayout.CENTER);
 
 		// add panel with textbox and send button
 		textbox = new JTextField(60);

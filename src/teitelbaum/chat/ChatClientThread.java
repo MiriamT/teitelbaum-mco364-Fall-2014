@@ -43,7 +43,8 @@ public class ChatClientThread extends Thread
 			{
 				if (line != null)
 				{
-					chatbox.setText(chatbox.getText() + "\n" + line);
+					chatbox.setText(chatbox.getText() + "\n" + line);  //used when connecting to server MultiChatServer
+					//chatbox.setText(chatbox.getText() + "\nOther: " + line); //used when connecting to server ServerChatLD
 				}
 			}
 			// not sure if i need this to allow time for client to send messages...

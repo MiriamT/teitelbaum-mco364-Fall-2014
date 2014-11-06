@@ -11,35 +11,32 @@ public class SocketHandler extends Thread
 {
 	private Socket socket;
 	private BlockingQueue<String> messages;
-	
+
 	public SocketHandler(Socket s, BlockingQueue<String> messages)
 	{
 		socket = s;
 		this.messages = messages;
 	}
-	
+
 	public void run()
 	{
-		try {
+		try
+		{
 			InputStream in = socket.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-			
+
 			String line;
-			
-			while( (line = reader.readLine()) != null)
+
+			while ((line = reader.readLine()) != null)
 			{
-				//write to all clients
+				// write to all clients
 				messages.add(line);
 			}
-			
-			
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 	}
-	
-
 }

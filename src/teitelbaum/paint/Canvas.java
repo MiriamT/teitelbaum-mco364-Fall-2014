@@ -1,50 +1,58 @@
 package teitelbaum.paint;
 
-import java.awt.Color;
+import java.awt.BasicStroke;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
 
-public class Canvas extends JComponent 
+public class Canvas extends JComponent
 {
 	private int x, y;
 	private BufferedImage image;
-	
-	
-	public Canvas()
+	private Paint frame;
+
+	public Canvas(Paint p)
 	{
 		image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB_PRE);
 		x = y = -1;
+		frame = p;
 	}
 
 	@Override
-	protected void paintComponent(Graphics g) 
+	protected void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		
-		g.drawImage(image, 0,  0, null);
-		
-		
+
+		g.drawImage(image, 0, 0, null);
+
 	}
 
-	public void setPoint(int x, int y) 
+	public void drawPoint(int x, int y)
 	{
-		
-		Graphics g = image.getGraphics();
-		g.setColor(Color.CYAN); //move to constructor?
-		//g.fillOval(x, y, 10, 10);
-		
-		if (this.x != -1 && this.y != -1 )
+		Graphics2D g = (Graphics2D) image.getGraphics();
+		g.setColor(frame.getLineColor());
+		g.setStroke(new BasicStroke(frame.getLineType()));
+
+		if (this.x != -1 && this.y != -1) // dont draw the first click, because dont have a prev point
 		{
-			//not the first click, so need to draw a line between prev and curr point
 			g.drawLine(this.x, this.y, x, y);
 		}
-		
+
 		this.x = x;
 		this.y = y;
 	}
-	
-	
-	
+
+	public void setPoint(int x, int y)
+	{
+		this.x = x;
+		this.y = y;
+	}
+
+	public void clear()
+	{
+		image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB_PRE); // probly a better way to clear..
+		repaint();
+	}
 }

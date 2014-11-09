@@ -34,8 +34,9 @@ public class Paint extends JFrame
 		canvas.addMouseMotionListener(listener);
 
 		JPanel toolbar = new JPanel();
+		toolbar.setBackground(Color.LIGHT_GRAY);
 
-		toolbar.add(new JLabel("Choose Line Thickness:"));
+		toolbar.add(new JLabel("Choose Brush Size:"));
 		JComboBox typeCombo = new JComboBox(lineTypes);
 		typeCombo.addActionListener(new TypeListener());
 		typeCombo.setSelectedIndex(3);

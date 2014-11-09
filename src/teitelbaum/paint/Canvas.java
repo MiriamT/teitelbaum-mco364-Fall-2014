@@ -26,7 +26,6 @@ public class Canvas extends JComponent
 		super.paintComponent(g);
 
 		g.drawImage(image, 0, 0, null);
-
 	}
 
 	public void drawPoint(int x, int y)

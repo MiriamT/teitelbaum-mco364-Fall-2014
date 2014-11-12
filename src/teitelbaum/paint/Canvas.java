@@ -1,6 +1,7 @@
 package teitelbaum.paint;
 
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -16,6 +17,7 @@ public class Canvas extends JComponent
 	public Canvas(Paint p)
 	{
 		image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB_PRE);
+		clear();
 		x = y = -1;
 		frame = p;
 	}
@@ -51,7 +53,9 @@ public class Canvas extends JComponent
 
 	public void clear()
 	{
-		image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB_PRE); // probly a better way to clear..
+		Graphics2D graphics = image.createGraphics();
+		graphics.setPaint ( Color.WHITE );
+		graphics.fillRect ( 0, 0, image.getWidth(), image.getHeight() );
 		repaint();
 	}
 }

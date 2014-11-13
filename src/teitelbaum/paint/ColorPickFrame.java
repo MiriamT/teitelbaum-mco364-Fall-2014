@@ -11,28 +11,28 @@ public class ColorPickFrame extends JFrame
 {
 	Paint mainFrame;
 	JColorChooser chooser;
-	
-	public ColorPickFrame(Paint frame) 
+
+	public ColorPickFrame(Paint frame)
 	{
 		mainFrame = frame;
 		setTitle("Color Picker");
-		
+
 		chooser = new JColorChooser(Color.BLACK);
 		chooser.getSelectionModel().addChangeListener(new ColorListener());
-		add(chooser);		
-		
+		add(chooser);
+
 		pack();
-		setLocationRelativeTo(null);		
-		setVisible(true);		
+		setLocationRelativeTo(null);
+		setVisible(true);
 	}
-	
+
 	private class ColorListener implements ChangeListener
 	{
 		@Override
-		public void stateChanged(ChangeEvent e) 
+		public void stateChanged(ChangeEvent e)
 		{
 			Color newColor = chooser.getColor();
-			mainFrame.setLineColor(newColor);
-		}		
-	}	
+			mainFrame.setBrushColor(newColor);
+		}
+	}
 }

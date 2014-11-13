@@ -21,6 +21,9 @@ public class Paint extends JFrame
 
 	public Paint()
 	{
+		lineType = 5;
+		lineColor = Color.BLACK;
+
 		setSize(800, 600);
 		setTitle("Paint");
 		setLocationRelativeTo(null);
@@ -28,9 +31,7 @@ public class Paint extends JFrame
 
 		Canvas canvas = new Canvas(this);
 		add(canvas, BorderLayout.CENTER);
-
 		DrawListener listener = new DrawListener(canvas);
-
 		canvas.addMouseMotionListener(listener);
 		canvas.addMouseWheelListener(new ScrollListener());
 
@@ -38,11 +39,13 @@ public class Paint extends JFrame
 		toolbar.setBackground(Color.LIGHT_GRAY);
 
 		toolbar.add(new JLabel("Brush Size: "));
-		brushSizeLabel = new JLabel("");
+		brushSizeLabel = new JLabel(String.valueOf(lineType));
 		toolbar.add(brushSizeLabel);
 
 		toolbar.add(new JLabel("Color: "));
-		colorLabel = new JLabel("");
+		colorLabel = new JLabel("       ");
+		colorLabel.setOpaque(true);
+		colorLabel.setBackground(lineColor);
 		toolbar.add(colorLabel);
 
 		JButton colorButton = new JButton("CUSTOM COLOR");
@@ -77,9 +80,10 @@ public class Paint extends JFrame
 		return lineColor;
 	}
 
-	public void setLineColor(Color c)
+	public void setBrushColor(Color c)
 	{
 		lineColor = c;
+		colorLabel.setBackground(lineColor);
 	}
 
 	private class ClearListener implements ActionListener
@@ -125,6 +129,7 @@ public class Paint extends JFrame
 			{
 				lineType = 0;
 			}
+			brushSizeLabel.setText(String.valueOf(lineType));
 		}
 	}
 

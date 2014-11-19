@@ -30,9 +30,8 @@ public class Canvas extends JComponent
 	{
 		super.paintComponent(g);
 
-		g.drawImage(image, 0, 0, null);
-		
-		listener.drawPreview((Graphics2D)g);
+		g.drawImage(image, 0, 0, null);		
+		listener.draw((Graphics2D)g);
 	}
 
 	public void drawPoint(int x, int y)

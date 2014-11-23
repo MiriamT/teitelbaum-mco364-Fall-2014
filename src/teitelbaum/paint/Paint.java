@@ -31,11 +31,11 @@ public class Paint extends JFrame
 
 		Canvas canvas = new Canvas(this);
 		add(canvas, BorderLayout.CENTER);
-		PencilListener listener = new PencilListener(canvas); //draws lines
-		canvas.addMouseMotionListener(listener); 
-		RectangleDrawListener rectDraw = new RectangleDrawListener(canvas); //draws rectangles
-		canvas.addMouseMotionListener(rectDraw);
-		canvas.addMouseListener(rectDraw);
+
+		canvas.setDrawListener(new PencilListener(canvas)); // draws lines
+
+		canvas.setDrawListener(new RectangleDrawListener(canvas)); // draws rectangles
+
 		canvas.addMouseWheelListener(new ScrollListener());
 
 		JPanel toolbar = new JPanel();

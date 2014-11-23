@@ -6,8 +6,7 @@ import java.awt.event.MouseMotionListener;
 
 public interface DrawListener extends MouseListener, MouseMotionListener
 {
-	/**
-	 * 
-	 */
 	void draw(Graphics2D g);
+
+	void drawPreview(Graphics2D graphics);
 }

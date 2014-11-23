@@ -1,12 +1,13 @@
 package teitelbaum.paint;
 
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
-public class RectangleDrawListener implements MouseListener, MouseMotionListener
+public class RectangleDrawListener implements DrawListener
 {
 	private Canvas canvas;
+	private boolean preview;
+	private int x1, y1, x2, y2;
 
 	public RectangleDrawListener(Canvas canvas)
 	{
@@ -14,47 +15,75 @@ public class RectangleDrawListener implements MouseListener, MouseMotionListener
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) 
+	public void mouseClicked(MouseEvent arg0)
 	{
-		canvas.drawPoint(e.getX(), e.getY());
-		canvas.repaint();
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) 
+	public void mouseEntered(MouseEvent arg0)
 	{
+		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e)
+	{
+		// get points and start drawing preview rect
+		preview = true;
+		x1 = x2 = e.getX();
+		y1 = y2 = e.getY();
+		canvas.repaint(); // draws the preview cuz preview called inside
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e)
+	{
+		preview = false;
+		draw((Graphics2D) canvas.getImage().getGraphics());
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e)
 	{
-		canvas.drawRectangle(e.getX(), e.getY());
+		x2 = e.getX();
+		y2 = e.getY();
+		// draw preview by calling repaint
 		canvas.repaint();
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e)
 	{
-		canvas.setPoint(-1, -1);
+
+	}
+
+	@Override
+	public void draw(Graphics2D g)
+	{
+		canvas.setBrush(g);
+		// see if can figure out how to let draw rect without restricting to dragging down and right
+		g.drawRect(x1, y1, x2 - x1, y2 - y1);
+
+	}
+
+	@Override
+	public void drawPreview(Graphics2D g)
+	{
+		if (preview)
+		{
+			draw(g);
+		}
+
 	}
 
 }

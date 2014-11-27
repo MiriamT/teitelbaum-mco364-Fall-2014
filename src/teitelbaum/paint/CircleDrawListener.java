@@ -2,10 +2,9 @@ package teitelbaum.paint;
 
 import java.awt.Graphics2D;
 
-public class RectangleDrawListener extends ShapeDrawListener
+public class CircleDrawListener extends ShapeDrawListener
 {
-
-	public RectangleDrawListener(Canvas canvas)
+	public CircleDrawListener(Canvas canvas)
 	{
 		super(canvas);
 	}
@@ -14,6 +13,6 @@ public class RectangleDrawListener extends ShapeDrawListener
 	public void draw(Graphics2D g)
 	{
 		super.draw(g);
-		g.drawRect(x, y, width, height);
+		g.drawOval(x, y, width, height);
 	}
 }

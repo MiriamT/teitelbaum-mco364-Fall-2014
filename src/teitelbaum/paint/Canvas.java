@@ -11,7 +11,6 @@ import javax.swing.JComponent;
 
 public class Canvas extends JComponent
 {
-
 	Point startDrag, endDrag;
 	private BufferedImage image;
 	private DrawListener listener;
@@ -34,24 +33,12 @@ public class Canvas extends JComponent
 		listener.drawPreview((Graphics2D) g);
 	}
 
-	public void drawRectangle(int x, int y)
-	{
-		Graphics2D g = (Graphics2D) image.getGraphics();
-		setBrush(g);
-
-	}
-
 	public void setBrush(Graphics2D g)
 	{
 		g.setColor(frame.getLineColor());
 		g.setStroke(new BasicStroke(frame.getLineType(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER));
 	}
 
-	/*
-	 * public void setStartDrag(Point p) { startDrag = p; }
-	 * 
-	 * public void setEndDrag(int x, int y) { endDrag = new Point(x, y); }
-	 */
 	public void clear()
 	{
 		Graphics2D graphics = image.createGraphics();
@@ -76,5 +63,4 @@ public class Canvas extends JComponent
 	{
 		return image;
 	}
-
 }

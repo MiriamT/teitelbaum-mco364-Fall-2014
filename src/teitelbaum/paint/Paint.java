@@ -8,20 +8,22 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Paint extends JFrame
 {
-	private int lineType;
+	private int brushSize;
 	private Color lineColor;
-	JLabel brushSizeLabel;
-	JLabel colorLabel;
+	private JLabel brushSizeLabel;
+	private JLabel colorLabel;
+	private String[] toolTypes = { "Pencil", "Rectangle", "RectFill", "Circle", "CircleFill", "Line" };
 
 	public Paint()
 	{
-		lineType = 5;
+		brushSize = 5;
 		lineColor = Color.BLACK;
 
 		setSize(800, 600);
@@ -30,19 +32,20 @@ public class Paint extends JFrame
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		Canvas canvas = new Canvas(this);
-		add(canvas, BorderLayout.CENTER);
-
-		canvas.setDrawListener(new PencilListener(canvas)); // draws lines
-
-		canvas.setDrawListener(new RectangleDrawListener(canvas)); // draws rectangles
-
 		canvas.addMouseWheelListener(new ScrollListener());
+		add(canvas, BorderLayout.CENTER);
 
 		JPanel toolbar = new JPanel();
 		toolbar.setBackground(Color.LIGHT_GRAY);
 
+		toolbar.add(new JLabel("Choose Draw Type:"));
+		JComboBox toolCombo = new JComboBox(toolTypes);
+		toolCombo.addActionListener(new ToolListener(canvas));
+		toolCombo.setSelectedIndex(0);
+		toolbar.add(toolCombo);
+
 		toolbar.add(new JLabel("Brush Size: "));
-		brushSizeLabel = new JLabel(String.valueOf(lineType));
+		brushSizeLabel = new JLabel(String.valueOf(brushSize));
 		toolbar.add(brushSizeLabel);
 
 		toolbar.add(new JLabel("Color: "));
@@ -75,7 +78,7 @@ public class Paint extends JFrame
 
 	public int getLineType()
 	{
-		return lineType;
+		return brushSize;
 	}
 
 	public Color getLineColor()
@@ -127,12 +130,51 @@ public class Paint extends JFrame
 		public void mouseWheelMoved(MouseWheelEvent e)
 		{
 			int notches = e.getWheelRotation();
-			lineType += notches;
-			if (lineType < 0)
+			brushSize += notches;
+			if (brushSize < 0)
 			{
-				lineType = 0;
+				brushSize = 0;
 			}
-			brushSizeLabel.setText(String.valueOf(lineType));
+			brushSizeLabel.setText(String.valueOf(brushSize));
+		}
+	}
+
+	private class ToolListener implements ActionListener
+	{
+		private Canvas canvas;
+
+		public ToolListener(Canvas canvas)
+		{
+			this.canvas = canvas;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			JComboBox cb = (JComboBox) e.getSource();
+			String tool = (String) cb.getSelectedItem();
+
+			switch (tool)
+			{
+			case "Pencil":
+				canvas.setDrawListener(new PencilDrawListener(canvas)); // draws with a "pencil"
+				break;
+			case "Rectangle":
+				canvas.setDrawListener(new RectangleDrawListener(canvas)); // draws rectangles
+				break;
+			case "RectFill":
+				canvas.setDrawListener(new RectFillDrawListener(canvas)); // draws filled rectangles
+				break;
+			case "Circle":
+				canvas.setDrawListener(new CircleDrawListener(canvas)); // draws circles
+				break;
+			case "CircleFill":
+				canvas.setDrawListener(new CircleFillDrawListener(canvas)); // draws filled circles
+				break;
+			case "Line":
+				canvas.setDrawListener(new LineDrawListener(canvas)); // draws straight lines
+				break;
+			}
 		}
 	}
 

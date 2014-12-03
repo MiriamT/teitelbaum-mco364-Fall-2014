@@ -35,7 +35,7 @@ public class ColorPickFrame extends JFrame
 		public void stateChanged(ChangeEvent e)
 		{
 			Color newColor = chooser.getColor();
-			mainFrame.setBrushColor(newColor);
+			mainFrame.updateGraphicsColor(newColor);
 		}
 	}
 }

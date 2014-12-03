@@ -50,7 +50,9 @@ public abstract class ShapeDrawListener implements DrawListener
 	public void mouseReleased(MouseEvent e)
 	{
 		preview = false;
-		draw((Graphics2D) canvas.getImage().getGraphics());
+		Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
+		canvas.getGraphicsAttributes().updateGraphicsSettings(g);
+		draw(g);
 	}
 
 	@Override
@@ -70,7 +72,6 @@ public abstract class ShapeDrawListener implements DrawListener
 	@Override
 	public void draw(Graphics2D g)
 	{
-		canvas.setBrush(g);
 		x = Math.min(startPt.x, currentPt.x);
 		y = Math.min(startPt.y, currentPt.y);
 		width = Math.abs(startPt.x - currentPt.x);

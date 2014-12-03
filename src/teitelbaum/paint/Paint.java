@@ -15,23 +15,21 @@ import javax.swing.JPanel;
 
 public class Paint extends JFrame
 {
-	private int brushSize;
-	private Color lineColor;
+	private GraphicsAttributes settings;
 	private JLabel brushSizeLabel;
 	private JLabel colorLabel;
 	private String[] toolTypes = { "Pencil", "Rectangle", "RectFill", "Circle", "CircleFill", "Line" };
 
 	public Paint()
 	{
-		brushSize = 5;
-		lineColor = Color.BLACK;
+		settings = new GraphicsAttributes();
 
 		setSize(800, 600);
 		setTitle("Paint");
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-		Canvas canvas = new Canvas(this);
+		
+		Canvas canvas = new Canvas(settings);
 		canvas.addMouseWheelListener(new ScrollListener());
 		add(canvas, BorderLayout.CENTER);
 
@@ -45,13 +43,13 @@ public class Paint extends JFrame
 		toolbar.add(toolCombo);
 
 		toolbar.add(new JLabel("Brush Size: "));
-		brushSizeLabel = new JLabel(String.valueOf(brushSize));
+		brushSizeLabel = new JLabel(String.valueOf(settings.getLineSize()));
 		toolbar.add(brushSizeLabel);
 
 		toolbar.add(new JLabel("Color: "));
 		colorLabel = new JLabel("       ");
 		colorLabel.setOpaque(true);
-		colorLabel.setBackground(lineColor);
+		colorLabel.setBackground(settings.getLineColor());
 		toolbar.add(colorLabel);
 
 		JButton colorButton = new JButton("CUSTOM COLOR");
@@ -76,20 +74,10 @@ public class Paint extends JFrame
 		add(toolbar, BorderLayout.NORTH);
 	}
 
-	public int getLineType()
+	public void updateGraphicsColor(Color c)
 	{
-		return brushSize;
-	}
-
-	public Color getLineColor()
-	{
-		return lineColor;
-	}
-
-	public void setBrushColor(Color c)
-	{
-		lineColor = c;
-		colorLabel.setBackground(lineColor);
+		settings.setLineColor(c);
+		colorLabel.setBackground(c);
 	}
 
 	private class ClearListener implements ActionListener
@@ -130,12 +118,8 @@ public class Paint extends JFrame
 		public void mouseWheelMoved(MouseWheelEvent e)
 		{
 			int notches = e.getWheelRotation();
-			brushSize += notches;
-			if (brushSize < 0)
-			{
-				brushSize = 0;
-			}
-			brushSizeLabel.setText(String.valueOf(brushSize));
+			settings.setLineSize(settings.getLineSize() + notches);
+			brushSizeLabel.setText(String.valueOf(settings.getLineSize()));
 		}
 	}
 

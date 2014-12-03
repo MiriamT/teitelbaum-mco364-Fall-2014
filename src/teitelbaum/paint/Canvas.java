@@ -11,16 +11,15 @@ import javax.swing.JComponent;
 
 public class Canvas extends JComponent
 {
-	Point startDrag, endDrag;
 	private BufferedImage image;
 	private DrawListener listener;
-	private Paint frame;
+	private GraphicsAttributes graphicsAttributes;
 
-	public Canvas(Paint p)
+	public Canvas(GraphicsAttributes graphicsAttributes)
 	{
 		image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB_PRE);
 		clear();
-		frame = p;
+		this.graphicsAttributes = graphicsAttributes;
 	}
 
 	@Override
@@ -29,14 +28,9 @@ public class Canvas extends JComponent
 		super.paintComponent(g);
 
 		g.drawImage(image, 0, 0, null);
-
+		
+		graphicsAttributes.updateGraphicsSettings((Graphics2D)g);
 		listener.drawPreview((Graphics2D) g);
-	}
-
-	public void setBrush(Graphics2D g)
-	{
-		g.setColor(frame.getLineColor());
-		g.setStroke(new BasicStroke(frame.getLineType(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER));
 	}
 
 	public void clear()
@@ -63,4 +57,10 @@ public class Canvas extends JComponent
 	{
 		return image;
 	}
+
+	public GraphicsAttributes getGraphicsAttributes() {
+		return graphicsAttributes;
+	}
+	
+	
 }

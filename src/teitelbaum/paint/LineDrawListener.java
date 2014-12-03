@@ -12,8 +12,7 @@ public class LineDrawListener extends ShapeDrawListener
 	@Override
 	public void draw(Graphics2D g)
 	{
-		// does not use super.draw() since works with 2 points, not width/height
-		canvas.setBrush(g);
+		// does not use super.draw() since drawLine() works with 2 points, not width/height
 		g.drawLine(startPt.x, startPt.y, currentPt.x, currentPt.y);
 	}
 

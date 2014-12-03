@@ -16,7 +16,7 @@ public class PencilDrawListener implements DrawListener
 	@Override
 	public void draw(Graphics2D g)
 	{
-		canvas.setBrush(g);
+		canvas.getGraphicsAttributes().updateGraphicsSettings(g);
 		g.drawLine(x1, y1, x2, y2);
 	}
 

@@ -36,7 +36,7 @@ public class GraphicsAttributes
 	public void setLineSize(int lineSize) 
 	{
 		this.lineSize = lineSize > 0? lineSize : 0;
-		stroke = new BasicStroke(this.lineSize, endCap, lineJoin); //create a new stroke every time line size changes since cant set size
+		stroke = new BasicStroke(this.lineSize, endCap, lineJoin); //create a new stroke every time line size changes since cant set size of BasicStroke once created
 	}
 
 	public Color getLineColor() 

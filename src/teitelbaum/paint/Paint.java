@@ -13,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import teitelbaum.paint.actionlisteners.ClearListener;
+
 public class Paint extends JFrame
 {
 	private GraphicsAttributes settings;
@@ -78,22 +80,6 @@ public class Paint extends JFrame
 	{
 		settings.setLineColor(c);
 		colorLabel.setBackground(c);
-	}
-
-	private class ClearListener implements ActionListener
-	{
-		private Canvas canvas;
-
-		public ClearListener(Canvas c)
-		{
-			canvas = c;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e)
-		{
-			canvas.clear();
-		}
 	}
 
 	private class ChooseColorListener implements ActionListener

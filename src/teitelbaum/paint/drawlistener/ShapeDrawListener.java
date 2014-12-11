@@ -1,8 +1,10 @@
-package teitelbaum.paint;
+package teitelbaum.paint.drawlistener;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+
+import teitelbaum.paint.Canvas;
 
 public abstract class ShapeDrawListener implements DrawListener
 {

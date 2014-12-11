@@ -5,8 +5,8 @@ import java.awt.Color;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+
+import teitelbaum.paint.actionlistener.ColorListener;
 
 public class ColorPickFrame extends JFrame
 {
@@ -20,7 +20,7 @@ public class ColorPickFrame extends JFrame
 
 		chooser = new JColorChooser(Color.BLACK);
 		chooser.setPreviewPanel(new JPanel()); // i dont like the preview panel so this gets rid of it
-		chooser.getSelectionModel().addChangeListener(new ColorListener());
+		chooser.getSelectionModel().addChangeListener(new ColorListener(chooser, mainFrame));
 		add(chooser);
 
 		pack();
@@ -29,13 +29,4 @@ public class ColorPickFrame extends JFrame
 		setVisible(true);
 	}
 
-	private class ColorListener implements ChangeListener
-	{
-		@Override
-		public void stateChanged(ChangeEvent e)
-		{
-			Color newColor = chooser.getColor();
-			mainFrame.updateGraphicsColor(newColor);
-		}
-	}
 }

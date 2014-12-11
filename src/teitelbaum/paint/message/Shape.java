@@ -1,6 +1,6 @@
 package teitelbaum.paint.message;
 
-public enum Shape 
-{ 
+public enum Shape
+{
 	OVAL, RECT
 }

@@ -1,4 +1,4 @@
-package teitelbaum.paint.actionlisteners;
+package teitelbaum.paint.actionlistener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

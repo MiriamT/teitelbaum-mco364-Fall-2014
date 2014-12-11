@@ -1,13 +1,13 @@
 package teitelbaum.paint;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
+
+import teitelbaum.paint.drawlistener.DrawListener;
 
 public class Canvas extends JComponent
 {
@@ -28,8 +28,8 @@ public class Canvas extends JComponent
 		super.paintComponent(g);
 
 		g.drawImage(image, 0, 0, null);
-		
-		graphicsAttributes.updateGraphicsSettings((Graphics2D)g);
+
+		graphicsAttributes.updateGraphicsSettings((Graphics2D) g);
 		listener.drawPreview((Graphics2D) g);
 	}
 
@@ -58,9 +58,9 @@ public class Canvas extends JComponent
 		return image;
 	}
 
-	public GraphicsAttributes getGraphicsAttributes() {
+	public GraphicsAttributes getGraphicsAttributes()
+	{
 		return graphicsAttributes;
 	}
-	
-	
+
 }

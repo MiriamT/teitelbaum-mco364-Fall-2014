@@ -1,4 +1,4 @@
-package teitelbaum.paint;
+package teitelbaum.paint.drawlistener;
 
 import java.awt.Graphics2D;
 import java.awt.event.MouseListener;

@@ -1,6 +1,8 @@
-package teitelbaum.paint;
+package teitelbaum.paint.drawlistener;
 
 import java.awt.Graphics2D;
+
+import teitelbaum.paint.Canvas;
 
 public class CircleDrawListener extends ShapeDrawListener
 {

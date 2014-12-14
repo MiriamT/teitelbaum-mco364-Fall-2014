@@ -19,7 +19,7 @@ public class Paint extends JFrame
 	private GraphicsAttributes settings;
 	private JLabel brushSizeLabel;
 	private JLabel colorLabel;
-	private String[] toolTypes = { "Pencil", "Rectangle", "RectFill", "Circle", "CircleFill", "Line" };
+	private String[] toolTypes = { "Pencil", "Rectangle", "RectFill", "Circle", "CircleFill", "Line", "BucketFill" };
 
 	public Paint()
 	{
@@ -73,6 +73,7 @@ public class Paint extends JFrame
 		// }
 
 		add(toolbar, BorderLayout.NORTH);
+		pack();
 	}
 
 	public void updateGraphicsColor(Color c)

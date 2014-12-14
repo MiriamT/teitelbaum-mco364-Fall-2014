@@ -1,6 +1,7 @@
 package teitelbaum.paint;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -20,6 +21,7 @@ public class Canvas extends JComponent
 		image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB_PRE);
 		clear();
 		this.graphicsAttributes = graphicsAttributes;
+		this.setPreferredSize(new Dimension(800, 600));
 	}
 
 	@Override

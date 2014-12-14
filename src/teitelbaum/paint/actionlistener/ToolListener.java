@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 
 import teitelbaum.paint.Canvas;
+import teitelbaum.paint.drawlistener.BucketFillDrawListener;
 import teitelbaum.paint.drawlistener.CircleDrawListener;
 import teitelbaum.paint.drawlistener.CircleFillDrawListener;
 import teitelbaum.paint.drawlistener.LineDrawListener;
@@ -47,6 +48,9 @@ public class ToolListener implements ActionListener
 			break;
 		case "Line":
 			canvas.setDrawListener(new LineDrawListener(canvas)); // draws straight lines
+			break;
+		case "BucketFill":
+			canvas.setDrawListener(new BucketFillDrawListener(canvas)); // uses bucket to fill color area
 			break;
 		}
 	}

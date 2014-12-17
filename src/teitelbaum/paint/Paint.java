@@ -38,7 +38,8 @@ public class Paint extends JFrame
 
 		toolbar.add(new JLabel("Choose Draw Type:"));
 		JComboBox toolCombo = new JComboBox(toolTypes);
-		toolCombo.addActionListener(new ToolListener(canvas));
+		ToolListener toolListener = new ToolListener(canvas);
+		toolCombo.addActionListener(toolListener);
 		toolCombo.setSelectedIndex(0);
 		toolbar.add(toolCombo);
 
@@ -74,6 +75,10 @@ public class Paint extends JFrame
 
 		add(toolbar, BorderLayout.NORTH);
 		pack();
+		
+		//connect to server
+		ClientReceiver conn = new ClientReceiver(canvas, toolListener);
+		conn.start();
 	}
 
 	public void updateGraphicsColor(Color c)

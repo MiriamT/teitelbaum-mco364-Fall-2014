@@ -47,19 +47,19 @@ public class BucketFillDrawListener implements DrawListener
 			int currentY = (int) p.getY();
 
 			y1 = currentY;
-			//while (y1 >= 0 && oldColor.equals(new Color(image.getRGB(currentX, y1))))
-			// seek up to highest point of same color
-			//{
-			//	y1--;
-			//}
-			//y1++; // went one row too high which caused loop to break, so go back to the last "good" point
+			while (y1 >= 0 && oldColor.equals(new Color(image.getRGB(currentX, y1))))
+			//seek up to highest point of same color
+			{
+				y1--;
+			}
+			y1++; // went one row too high which caused loop to break, so go back to the last "good" point
 
 			spanLeft = spanRight = false;
 			int width = image.getWidth();
 			int height = image.getHeight();
 
 			while (y1 < height && oldColor.equals(new Color(image.getRGB(currentX, y1))))
-			// scan down to lowest point of same color
+			// scan down to lowest point of same color, coloring each one in the process and adding points to the right of left to stak to look into later
 			{
 
 				image.setRGB(currentX, y1, newColor.getRGB()); // change current pixel to new color

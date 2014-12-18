@@ -29,7 +29,7 @@ public class ClearListener implements ActionListener
 	{
 		BufferedImage image = canvas.getImage();
 		String stringMessage = new ClearMessage(image.getWidth(), image.getHeight()).toString();
-		writer.println(stringMessage);
+		writer.print(stringMessage);
 		writer.flush();
 	}
 

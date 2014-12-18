@@ -32,7 +32,7 @@ public class PencilDrawListener implements DrawListener
 	{
 		String stringMessage = new LineMessage(x1, y1, x2, y2, canvas.getGraphicsAttributes().getLineColor().getRGB(), canvas.getGraphicsAttributes().getLineSize()).toString();
 		PrintWriter writer = toolListener.getPrintWriter();
-		writer.println(stringMessage);
+		writer.print(stringMessage);
 		writer.flush();
 	}
 

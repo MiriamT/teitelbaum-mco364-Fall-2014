@@ -29,7 +29,7 @@ public class RectangleDrawListener extends ShapeDrawListener
 		String stringMessage = new ShapeMessage(Shape.RECT, super.x, super.y, super.width, super.height, super.canvas.getGraphicsAttributes().getLineColor().getRGB(), super.canvas
 				.getGraphicsAttributes().getLineSize(), false).toString();
 		PrintWriter writer = super.toolListener.getPrintWriter();
-		writer.println(stringMessage);
+		writer.print(stringMessage);
 		writer.flush();
 	}
 }

@@ -27,7 +27,7 @@ public class LineDrawListener extends ShapeDrawListener
 		String stringMessage = new LineMessage(startPt.x, startPt.y, currentPt.x, currentPt.y, super.canvas.getGraphicsAttributes().getLineColor().getRGB(), super.canvas.getGraphicsAttributes()
 				.getLineSize()).toString();
 		PrintWriter writer = super.toolListener.getPrintWriter();
-		writer.println(stringMessage);
+		writer.print(stringMessage);
 		writer.flush();
 	}
 

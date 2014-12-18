@@ -33,10 +33,10 @@ public class ChatterBoxUI extends JFrame
 		// add chat text display
 		chatText = new JTextArea();
 		chatText.setText("Welcome to ChatterBox!");
-		//to enable the textarea to scroll to end automatically:
-		DefaultCaret caret = (DefaultCaret)chatText.getCaret();
+		// to enable the textarea to scroll to end automatically:
+		DefaultCaret caret = (DefaultCaret) chatText.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-		
+
 		add(new JScrollPane(chatText), BorderLayout.CENTER);
 
 		// add panel with textbox and send button
@@ -57,7 +57,7 @@ public class ChatterBoxUI extends JFrame
 						{
 							out.write((text + "\n").getBytes()); // need the \n because readLine() blocks until it receives it
 							out.flush(); // sends out the data
-							//chatText.setText(chatText.getText() + "\nMe: " + text); //used when connecting to server ServerChatLD
+							// chatText.setText(chatText.getText() + "\nMe: " + text); //used when connecting to server ServerChatLD
 							textbox.setText("");
 						}
 						catch (IOException e)

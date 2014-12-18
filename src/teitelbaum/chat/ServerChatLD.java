@@ -19,7 +19,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class ServerChatLD extends JFrame {
+public class ServerChatLD extends JFrame
+{
 
 	private JTextField field;
 	private JTextArea area;
@@ -27,7 +28,8 @@ public class ServerChatLD extends JFrame {
 	private JButton send;
 	private Socket socket;
 
-	public ServerChatLD() {
+	public ServerChatLD()
+	{
 		this.panel = new JPanel();
 		this.panel.setLayout(new BorderLayout());
 		field = new JTextField();
@@ -51,7 +53,8 @@ public class ServerChatLD extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
 
-		try {
+		try
+		{
 			area.setText("Server started \n");
 			ServerSocket server = new ServerSocket(8000);
 			socket = server.accept();
@@ -61,29 +64,37 @@ public class ServerChatLD extends JFrame {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 			String line;
 
-			while (!"".equals((line = reader.readLine()))) {
+			while (!"".equals((line = reader.readLine())))
+			{
 				String client = "Client: ";
 				area.setText(area.getText() + client + line);
 			}
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			System.err.print(e);
 		}
 
 	}
 
-	private class ButtonListener implements ActionListener {
+	private class ButtonListener implements ActionListener
+	{
 
 		@Override
-		public void actionPerformed(ActionEvent arg0) {
+		public void actionPerformed(ActionEvent arg0)
+		{
 			// TODO Auto-generated method stub
 
-			try {
+			try
+			{
 				DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 				out.write((field.getText() + "\n").getBytes());
 				out.flush();
 				area.setText(area.getText() + "\nMe:   " + field.getText().toString());
 
-			} catch (IOException e) {
+			}
+			catch (IOException e)
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -92,7 +103,8 @@ public class ServerChatLD extends JFrame {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		new ServerChatLD();
 	}
 }

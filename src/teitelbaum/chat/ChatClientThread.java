@@ -29,9 +29,9 @@ public class ChatClientThread extends Thread
 		try
 		{
 			// read
-			//socket = new Socket("192.168.117.107", 3773); //prof's comp
+			// socket = new Socket("192.168.117.107", 3773); //prof's comp
 			socket = new Socket("localhost", 3773);
-			
+
 			// once connection is made, send it back to the UI
 			chatUI.setSocketComponets(socket);
 
@@ -45,16 +45,16 @@ public class ChatClientThread extends Thread
 			{
 				if (line != null)
 				{
-					chatbox.setText(chatbox.getText() + "\n" + line);  //used when connecting to server MultiChatServer
-					//chatbox.setText(chatbox.getText() + "\nOther: " + line); //used when connecting to server ServerChatLD
+					chatbox.setText(chatbox.getText() + "\n" + line); // used when connecting to server MultiChatServer
+					// chatbox.setText(chatbox.getText() + "\nOther: " + line); //used when connecting to server ServerChatLD
 				}
 			}
 			// not sure if i need this to allow time for client to send messages...
 			sleep(1000);
 		}
-		catch ( SocketException e ) 
+		catch (SocketException e)
 		{
-			//"restart" thread and still maintain connection with UI by passing same chatUI variable
+			// "restart" thread and still maintain connection with UI by passing same chatUI variable
 			chatbox.setText(chatbox.getText() + "\nConnection timeout - restarting connection");
 			new ChatClientThread(chatUI).start();
 		}

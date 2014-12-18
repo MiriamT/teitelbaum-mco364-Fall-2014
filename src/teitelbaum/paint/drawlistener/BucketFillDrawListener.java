@@ -36,7 +36,7 @@ public class BucketFillDrawListener implements DrawListener
 	{
 		String stringMessage = new BucketFillMessage(x, y, canvas.getGraphicsAttributes().getLineColor().getRGB()).toString();
 		PrintWriter writer = toolListener.getPrintWriter();
-		writer.println(stringMessage);
+		writer.print(stringMessage);
 		writer.flush();
 	}
 
@@ -176,7 +176,8 @@ public class BucketFillDrawListener implements DrawListener
 		y = e.getY();
 		oldColor = new Color(canvas.getImage().getRGB(x, y));
 		Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
-		draw(g);
+		// draw(g);
+		sendMessageToServer();
 
 	}
 

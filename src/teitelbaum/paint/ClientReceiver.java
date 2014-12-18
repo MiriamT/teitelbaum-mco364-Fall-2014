@@ -1,13 +1,14 @@
 package teitelbaum.paint;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.ArrayList;
 
+import teitelbaum.paint.actionlistener.ClearListener;
 import teitelbaum.paint.actionlistener.ToolListener;
 import teitelbaum.paint.message.PaintMessage;
 import teitelbaum.paint.message.PaintMessageFactory;
@@ -19,11 +20,13 @@ public class ClientReceiver extends Thread
 	private Canvas canvas;
 	private ToolListener toolListener;
 	private PaintMessageFactory paintFactory;
+	private ClearListener clearListener;
 
-	public ClientReceiver(Canvas canvas, ToolListener toolListener)
+	public ClientReceiver(Canvas canvas, ToolListener toolListener, ClearListener clearListener)
 	{
 		this.canvas = canvas;
 		this.toolListener = toolListener;
+		this.clearListener = clearListener;
 		paintFactory = new PaintMessageFactory();
 	}
 
@@ -34,27 +37,34 @@ public class ClientReceiver extends Thread
 		try
 		{
 			// establish the connection
-			socket = new Socket("192.168.117.107", 3773);
+			// socket = new Socket("192.168.117.107", 3773);
+			socket = new Socket("localhost", 3773);
 
-			// can only have 1 instance of output stream, so sending it to directly to toolListener because its the only thing that needs it
-			toolListener.setObjectOutputStream(new ObjectOutputStream(socket.getOutputStream()));
+			// should only have 1 instance of printwriter, so sending it to directly to toolListener and clearListener
 
-			ObjectInputStream in = new ObjectInputStream(socket.getInputStream()); // should be the only in stream
-			
+			PrintWriter writer = new PrintWriter(socket.getOutputStream());
 
-			// now receives the PianoPackets
-			PaintMessage message;
-			while (true)
+			toolListener.setPrintWriter(writer);
+			clearListener.setPrintWriter(writer);
+
+			InputStream in = socket.getInputStream(); // should be the only in stream
+			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+			String messageString;
+			while ((messageString = reader.readLine()) != null)
 			{
-				
-				message = (PaintMessage) in.readObject();
-				message.apply((Graphics2D)canvas.getImage().getGraphics());				
+				if (!messageString.equals("")) // need to check for "" because we append \n to toString and flush also sends \n
+				{
+					PaintMessage message = paintFactory.getMessage(messageString);
+					message.apply((Graphics2D) canvas.getImage().getGraphics());
+					canvas.repaint();
+				}
 			}
 		}
 		catch (SocketException e)
 		{
 			// "restart" thread
-			new ClientReceiver(canvas, toolListener).start();
+			new ClientReceiver(canvas, toolListener, clearListener).start();
 		}
 		catch (Exception e)
 		{

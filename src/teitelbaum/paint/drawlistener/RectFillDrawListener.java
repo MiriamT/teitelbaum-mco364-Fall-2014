@@ -1,19 +1,19 @@
 package teitelbaum.paint.drawlistener;
 
 import java.awt.Graphics2D;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 
 import teitelbaum.paint.Canvas;
+import teitelbaum.paint.actionlistener.ToolListener;
 import teitelbaum.paint.message.Shape;
 import teitelbaum.paint.message.ShapeMessage;
 
 public class RectFillDrawListener extends ShapeDrawListener
 {
 
-	public RectFillDrawListener(Canvas canvas, ObjectOutputStream out)
+	public RectFillDrawListener(Canvas canvas, ToolListener toolListener)
 	{
-		super(canvas, out);
+		super(canvas, toolListener);
 	}
 
 	@Override
@@ -22,15 +22,14 @@ public class RectFillDrawListener extends ShapeDrawListener
 		super.draw(g);
 		g.fillRect(x, y, width, height);
 	}
-	
+
 	@Override
-	public void sendMessageToServer() 
+	public void sendMessageToServer()
 	{
-		try {
-			super.out.writeObject(new ShapeMessage(Shape.RECT, super.x, super.y, super.width, super.height, super.canvas.getGraphicsAttributes().getLineColor().getRGB(), super.canvas.getGraphicsAttributes().getLineSize(), true));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+		String stringMessage = new ShapeMessage(Shape.RECT, super.x, super.y, super.width, super.height, super.canvas.getGraphicsAttributes().getLineColor().getRGB(), super.canvas
+				.getGraphicsAttributes().getLineSize(), true).toString();
+		PrintWriter writer = super.toolListener.getPrintWriter();
+		writer.println(stringMessage);
+		writer.flush();
 	}
 }

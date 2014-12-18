@@ -3,9 +3,9 @@ package teitelbaum.paint.drawlistener;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-import java.io.ObjectOutputStream;
 
 import teitelbaum.paint.Canvas;
+import teitelbaum.paint.actionlistener.ToolListener;
 import teitelbaum.paint.message.PaintMessageFactory;
 
 public abstract class ShapeDrawListener implements DrawListener
@@ -14,16 +14,16 @@ public abstract class ShapeDrawListener implements DrawListener
 	protected boolean preview;
 	protected Point startPt, currentPt;
 	protected int x, y, width, height;
-	protected ObjectOutputStream out;
+	protected ToolListener toolListener;
 	protected PaintMessageFactory messageFactory;
 
-	public ShapeDrawListener(Canvas canvas, ObjectOutputStream out)
+	public ShapeDrawListener(Canvas canvas, ToolListener toolListener)
 	{
 		this.canvas = canvas;
-		this.out = out;
+		this.toolListener = toolListener;
 		messageFactory = new PaintMessageFactory();
 	}
-	
+
 	public abstract void sendMessageToServer();
 
 	@Override
@@ -60,7 +60,7 @@ public abstract class ShapeDrawListener implements DrawListener
 	public void mouseReleased(MouseEvent e)
 	{
 		preview = false;
-		//now need to send message to server in place of draw, so dont need to keep updating graphics settings here anymore
+		// now need to send message to server in place of draw, so dont need to keep updating graphics settings here anymore
 		sendMessageToServer();
 	}
 
@@ -96,7 +96,5 @@ public abstract class ShapeDrawListener implements DrawListener
 			draw(g);
 		}
 	}
-	
-	
-	
+
 }

@@ -5,25 +5,39 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.PrintWriter;
 import java.util.Stack;
 
 import teitelbaum.paint.Canvas;
+import teitelbaum.paint.actionlistener.ToolListener;
+import teitelbaum.paint.message.BucketFillMessage;
 
 public class BucketFillDrawListener implements DrawListener
 {
 	private int x, y;
 	private Color oldColor;
 	private Canvas canvas;
+	private ToolListener toolListener;
 
-	public BucketFillDrawListener(Canvas canvas)
+	public BucketFillDrawListener(Canvas canvas, ToolListener toolListener)
 	{
 		this.canvas = canvas;
+		this.toolListener = toolListener;
 	}
 
 	@Override
 	public void draw(Graphics2D g)
 	{
 		floodFillScanLine(x, y, oldColor, canvas.getGraphicsAttributes().getLineColor(), canvas.getImage());
+	}
+
+	@Override
+	public void sendMessageToServer()
+	{
+		String stringMessage = new BucketFillMessage(x, y, canvas.getGraphicsAttributes().getLineColor().getRGB()).toString();
+		PrintWriter writer = toolListener.getPrintWriter();
+		writer.println(stringMessage);
+		writer.flush();
 	}
 
 	private void floodFillScanLine(int x, int y, Color oldColor, Color newColor, BufferedImage image)
@@ -48,7 +62,7 @@ public class BucketFillDrawListener implements DrawListener
 
 			y1 = currentY;
 			while (y1 >= 0 && oldColor.equals(new Color(image.getRGB(currentX, y1))))
-			//seek up to highest point of same color
+			// seek up to highest point of same color
 			{
 				y1--;
 			}
@@ -59,7 +73,8 @@ public class BucketFillDrawListener implements DrawListener
 			int height = image.getHeight();
 
 			while (y1 < height && oldColor.equals(new Color(image.getRGB(currentX, y1))))
-			// scan down to lowest point of same color, coloring each one in the process and adding points to the right of left to stak to look into later
+			// scan down to lowest point of same color, coloring each one in the process and adding points to the right of left to stak
+			// to look into later
 			{
 
 				image.setRGB(currentX, y1, newColor.getRGB()); // change current pixel to new color

@@ -14,11 +14,10 @@ public class PaintMessageFactory
 			message = new LineMessage(s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt());
 			break;
 		case SHAPE:
-			message = new ShapeMessage(Shape.valueOf(s.next()), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(),
-					s.nextInt(), Boolean.valueOf(s.next()));
+			message = new ShapeMessage(Shape.valueOf(s.next()), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), Boolean.valueOf(s.next()));
 			break;
 		case CLEAR:
-			message = new ClearMessage();
+			message = new ClearMessage(s.nextInt(), s.nextInt());
 			break;
 		case BUCKET_FILL:
 			message = new BucketFillMessage(s.nextInt(), s.nextInt(), s.nextInt());

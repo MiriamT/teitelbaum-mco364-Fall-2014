@@ -59,7 +59,8 @@ public class Paint extends JFrame
 		toolbar.add(colorButton);
 
 		JButton clearButton = new JButton("CLEAR");
-		clearButton.addActionListener(new ClearListener(canvas));
+		ClearListener clearListener = new ClearListener(canvas);
+		clearButton.addActionListener(clearListener);
 		toolbar.add(clearButton);
 
 		// implement this when have time - save the image to file
@@ -75,9 +76,9 @@ public class Paint extends JFrame
 
 		add(toolbar, BorderLayout.NORTH);
 		pack();
-		
-		//connect to server
-		ClientReceiver conn = new ClientReceiver(canvas, toolListener);
+
+		// connect to server
+		ClientReceiver conn = new ClientReceiver(canvas, toolListener, clearListener);
 		conn.start();
 	}
 

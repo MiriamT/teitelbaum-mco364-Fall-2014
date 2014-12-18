@@ -44,6 +44,7 @@ public class ShapeMessage implements PaintMessage
 			{
 				g.drawOval(x, y, width, height);
 			}
+			break;
 		case RECT:
 			if (fill)
 			{
@@ -53,7 +54,9 @@ public class ShapeMessage implements PaintMessage
 			{
 				g.drawRect(x, y, width, height);
 			}
+			break;
 		}
+
 	}
 
 	public Shape getType()
@@ -139,8 +142,7 @@ public class ShapeMessage implements PaintMessage
 	@Override
 	public String toString()
 	{
-		return "SHAPE " + type.toString() + " " + x + " " + y + " " + width + " " + height + " " + color + " " + stroke + " " + fill
-				+ "\n";
+		return "SHAPE " + type.toString() + " " + x + " " + y + " " + width + " " + height + " " + color + " " + stroke + " " + fill + "\n";
 	}
 
 }

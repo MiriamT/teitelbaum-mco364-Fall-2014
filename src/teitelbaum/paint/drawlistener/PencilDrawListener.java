@@ -2,22 +2,22 @@ package teitelbaum.paint.drawlistener;
 
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 
 import teitelbaum.paint.Canvas;
+import teitelbaum.paint.actionlistener.ToolListener;
 import teitelbaum.paint.message.LineMessage;
 
 public class PencilDrawListener implements DrawListener
 {
 	private int x1, y1, x2, y2;
 	private Canvas canvas;
-	private ObjectOutputStream out;
+	private ToolListener toolListener;
 
-	public PencilDrawListener(Canvas canvas, ObjectOutputStream out)
+	public PencilDrawListener(Canvas canvas, ToolListener toolListener)
 	{
 		this.canvas = canvas;
-		this.out = out;
+		this.toolListener = toolListener;
 	}
 
 	@Override
@@ -26,15 +26,14 @@ public class PencilDrawListener implements DrawListener
 		canvas.getGraphicsAttributes().updateGraphicsSettings(g);
 		g.drawLine(x1, y1, x2, y2);
 	}
-	
-	public void sendMessageToServer() 
+
+	@Override
+	public void sendMessageToServer()
 	{
-		try {
-			out.writeObject(new LineMessage(x1, y1, x2, y2, canvas.getGraphicsAttributes().getLineColor().getRGB(), canvas.getGraphicsAttributes().getLineSize()));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+		String stringMessage = new LineMessage(x1, y1, x2, y2, canvas.getGraphicsAttributes().getLineColor().getRGB(), canvas.getGraphicsAttributes().getLineSize()).toString();
+		PrintWriter writer = toolListener.getPrintWriter();
+		writer.println(stringMessage);
+		writer.flush();
 	}
 
 	@Override

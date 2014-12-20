@@ -52,7 +52,7 @@ public abstract class ShapeDrawListener implements DrawListener
 	public void mouseReleased(MouseEvent e)
 	{
 		preview = false;
-		Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
+		Graphics2D g = (Graphics2D) canvas.getCurrentImage().getGraphics();
 		canvas.getGraphicsAttributes().updateGraphicsSettings(g);
 		draw(g);
 	}

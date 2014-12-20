@@ -17,6 +17,6 @@ public class ClearListener implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		canvas.clear();
+		canvas.clear(canvas.getCurrentLayer());
 	}
 }

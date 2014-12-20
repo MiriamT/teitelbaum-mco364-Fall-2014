@@ -23,7 +23,7 @@ public class BucketFillDrawListener implements DrawListener
 	@Override
 	public void draw(Graphics2D g)
 	{
-		floodFillScanLine(x, y, oldColor, canvas.getGraphicsAttributes().getLineColor(), canvas.getImage());
+		floodFillScanLine(x, y, oldColor, canvas.getGraphicsAttributes().getLineColor(), canvas.getCurrentImage());
 	}
 
 	private void floodFillScanLine(int x, int y, Color oldColor, Color newColor, BufferedImage image)
@@ -159,8 +159,8 @@ public class BucketFillDrawListener implements DrawListener
 	{
 		x = e.getX();
 		y = e.getY();
-		oldColor = new Color(canvas.getImage().getRGB(x, y));
-		Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
+		oldColor = new Color(canvas.getCurrentImage().getRGB(x, y));
+		Graphics2D g = (Graphics2D) canvas.getCurrentImage().getGraphics();
 		draw(g);
 
 	}

@@ -27,7 +27,7 @@ public class PencilDrawListener implements DrawListener
 	{
 		x2 = e.getX();
 		y2 = e.getY();
-		draw((Graphics2D) canvas.getImage().getGraphics());
+		draw((Graphics2D) canvas.getCurrentImage().getGraphics());
 		canvas.repaint();
 		x1 = x2;
 		y1 = y2;
@@ -65,7 +65,7 @@ public class PencilDrawListener implements DrawListener
 	{
 		x1 = x2 = e.getX();
 		y1 = y2 = e.getY();
-		draw((Graphics2D) canvas.getImage().getGraphics()); // lets u draw dots by clicking
+		draw((Graphics2D) canvas.getCurrentImage().getGraphics()); // lets u draw dots by clicking
 		canvas.repaint();
 	}
 

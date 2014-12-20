@@ -30,7 +30,7 @@ public class Paint extends JFrame
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		Canvas canvas = new Canvas(settings);
+		Canvas canvas = new Canvas(settings, this);
 		add(canvas, BorderLayout.CENTER);
 
 		JPanel toolbar = new JPanel();
@@ -73,6 +73,11 @@ public class Paint extends JFrame
 		// }
 
 		add(toolbar, BorderLayout.NORTH);
+
+		// layer panel
+		LayersPanel layersPanel = new LayersPanel(canvas);
+		add(layersPanel, BorderLayout.EAST);
+
 		pack();
 	}
 

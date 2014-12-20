@@ -55,6 +55,6 @@ public class BucketFillMessage implements PaintMessage
 	@Override
 	public String toString()
 	{
-		return "BUCKET_FILL " + " " + x + " " + y + " " + color;
+		return "BUCKET_FILL " + " " + x + " " + y + " " + color + "\n";
 	}
 }

@@ -3,40 +3,22 @@ package teitelbaum.paint.message;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import teitelbaum.paint.Canvas;
+
 public class ClearMessage implements PaintMessage
 {
 	private int imageWidth, imageHeight;
 
-	public ClearMessage(int imageWidth, int imageHeight)
+	public ClearMessage(Canvas canvas)
 	{
-		this.imageWidth = imageWidth;
-		this.imageHeight = imageHeight;
-	}
-
-	public int getImageWidth()
-	{
-		return imageWidth;
-	}
-
-	public void setImageWidth(int imageWidth)
-	{
-		this.imageWidth = imageWidth;
-	}
-
-	public int getImageHeight()
-	{
-		return imageHeight;
-	}
-
-	public void setImageHeight(int imageHeight)
-	{
-		this.imageHeight = imageHeight;
+		imageWidth = canvas.getImage().getWidth();
+		imageHeight = canvas.getImage().getHeight();
 	}
 
 	@Override
 	public String toString()
 	{
-		return "CLEAR " + imageWidth + " " + imageHeight + "\n";
+		return "CLEAR\n";
 	}
 
 	@Override

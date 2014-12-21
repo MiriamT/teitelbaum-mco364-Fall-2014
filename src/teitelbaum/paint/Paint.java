@@ -36,9 +36,13 @@ public class Paint extends JFrame
 		JPanel toolbar = new JPanel();
 		toolbar.setBackground(Color.LIGHT_GRAY);
 
+		JButton networkButton = new JButton("CONNECT TO NETWORK");
+
+		toolbar.add(networkButton);
+
 		toolbar.add(new JLabel("Choose Draw Type:"));
 		JComboBox toolCombo = new JComboBox(toolTypes);
-		ToolListener toolListener = new ToolListener(canvas);
+		ToolListener toolListener = new ToolListener(canvas, this);
 		toolCombo.addActionListener(toolListener);
 		toolCombo.setSelectedIndex(0);
 		toolbar.add(toolCombo);
@@ -75,11 +79,11 @@ public class Paint extends JFrame
 		// }
 
 		add(toolbar, BorderLayout.NORTH);
+
+		// add network listener last since must instantiate these components first
+		networkButton.addActionListener(new NetworkListener(canvas, toolListener, clearListener));
 		pack();
 
-		// connect to server
-		ClientReceiver conn = new ClientReceiver(canvas, toolListener, clearListener);
-		conn.start();
 	}
 
 	public void updateGraphicsColor(Color c)

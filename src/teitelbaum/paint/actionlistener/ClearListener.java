@@ -12,6 +12,7 @@ public class ClearListener implements ActionListener
 {
 	private Canvas canvas;
 	private PrintWriter writer;
+	private boolean connected;
 
 	public ClearListener(Canvas c)
 	{
@@ -21,8 +22,15 @@ public class ClearListener implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		// canvas.clear();
-		sendMessageToServer();
+		if (connected)
+		{
+			sendMessageToServer();
+		}
+		else
+		{
+			canvas.clear();
+		}
+
 	}
 
 	public void sendMessageToServer()
@@ -36,5 +44,11 @@ public class ClearListener implements ActionListener
 	public void setPrintWriter(PrintWriter writer)
 	{
 		this.writer = writer;
+	}
+
+	public void setConnected(boolean connected)
+	{
+		this.connected = connected;
+
 	}
 }

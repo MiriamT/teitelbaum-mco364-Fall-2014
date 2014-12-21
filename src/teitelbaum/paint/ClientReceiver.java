@@ -21,13 +21,19 @@ public class ClientReceiver extends Thread
 	private ToolListener toolListener;
 	private PaintMessageFactory paintFactory;
 	private ClearListener clearListener;
+	private boolean connected;
 
 	public ClientReceiver(Canvas canvas, ToolListener toolListener, ClearListener clearListener)
 	{
 		this.canvas = canvas;
 		this.toolListener = toolListener;
 		this.clearListener = clearListener;
-		paintFactory = new PaintMessageFactory();
+		paintFactory = new PaintMessageFactory(canvas);
+	}
+
+	public void setConnected(boolean isConnected)
+	{
+		connected = isConnected;
 	}
 
 	@Override
@@ -53,7 +59,8 @@ public class ClientReceiver extends Thread
 			String messageString;
 			while ((messageString = reader.readLine()) != null)
 			{
-				if (!messageString.equals("")) // need to check for "" because we append \n to toString and flush also sends \n
+				if (!messageString.equals("") && connected) // need to check for "" because we append \n to toString and flush also
+															// sends \n
 				{
 					PaintMessage message = paintFactory.getMessage(messageString);
 					message.apply((Graphics2D) canvas.getImage().getGraphics());

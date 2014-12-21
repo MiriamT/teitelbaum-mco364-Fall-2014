@@ -175,10 +175,15 @@ public class BucketFillDrawListener implements DrawListener
 		x = e.getX();
 		y = e.getY();
 		oldColor = new Color(canvas.getImage().getRGB(x, y));
-		Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
-		// draw(g);
-		sendMessageToServer();
-
+		if (toolListener.isConnected())
+		{
+			sendMessageToServer();
+		}
+		else
+		{
+			Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
+			draw(g);
+		}
 	}
 
 	@Override

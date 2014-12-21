@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import javax.swing.JComboBox;
 
 import teitelbaum.paint.Canvas;
+import teitelbaum.paint.Paint;
 import teitelbaum.paint.drawlistener.BucketFillDrawListener;
 import teitelbaum.paint.drawlistener.CircleDrawListener;
 import teitelbaum.paint.drawlistener.CircleFillDrawListener;
@@ -19,10 +20,13 @@ public class ToolListener implements ActionListener
 {
 	private Canvas canvas;
 	private PrintWriter writer;
+	private Paint paint;
+	private boolean connected;
 
-	public ToolListener(Canvas canvas)
+	public ToolListener(Canvas canvas, Paint paint)
 	{
 		this.canvas = canvas;
+		this.paint = paint;
 	}
 
 	@Override
@@ -65,5 +69,15 @@ public class ToolListener implements ActionListener
 	public PrintWriter getPrintWriter()
 	{
 		return writer;
+	}
+
+	public void setConnected(boolean connected)
+	{
+		this.connected = connected;
+	}
+
+	public boolean isConnected()
+	{
+		return connected;
 	}
 }

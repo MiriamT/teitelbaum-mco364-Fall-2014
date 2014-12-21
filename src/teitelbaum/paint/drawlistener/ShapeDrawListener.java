@@ -51,8 +51,6 @@ public abstract class ShapeDrawListener implements DrawListener
 		preview = true;
 		startPt = e.getPoint();
 		currentPt = e.getPoint();
-		// x1 = x2 = e.getX();
-		// y1 = y2 = e.getY();
 		canvas.repaint(); // draws the preview cuz preview called inside
 	}
 
@@ -60,8 +58,17 @@ public abstract class ShapeDrawListener implements DrawListener
 	public void mouseReleased(MouseEvent e)
 	{
 		preview = false;
-		// now need to send message to server in place of draw, so dont need to keep updating graphics settings here anymore
-		sendMessageToServer();
+		if (toolListener.isConnected())
+		{
+			sendMessageToServer();
+		}
+		else
+		{
+			Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
+			canvas.getGraphicsAttributes().updateGraphicsSettings(g);
+			draw(g);
+		}
+
 	}
 
 	@Override

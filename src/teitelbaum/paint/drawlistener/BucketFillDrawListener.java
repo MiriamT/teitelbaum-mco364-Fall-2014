@@ -24,6 +24,53 @@ public class BucketFillDrawListener implements DrawListener
 	public void draw(Graphics2D g)
 	{
 		floodFillScanLine(x, y, oldColor, canvas.getGraphicsAttributes().getLineColor(), canvas.getCurrentImage());
+		// floodFill(x, y, oldColor, canvas.getGraphicsAttributes().getLineColor(), canvas.getCurrentImage());
+	}
+
+	private void floodFill(int x, int y, Color oldColor, Color newColor, BufferedImage image)
+	{
+		if (oldColor.equals(newColor))
+		{
+			return;
+		}
+
+		Point p = new Point(x, y);
+
+		Stack<Point> stack = new Stack<>();
+		stack.push(p);
+
+		// if will use map:
+		// Map<Point, Boolean> visitedPixels = new HashMap<>();
+		// visitedPixels.put(p, true);
+
+		// as soon as visit a pixel, put in map
+		// to see if has been visited yet, use containsKey() bc usually O(1) - same as get()
+
+		while (!stack.isEmpty())
+		{
+			p = stack.pop();
+			int currentX = (int) p.getX();
+			int currentY = (int) p.getY();
+
+			image.setRGB(currentX, currentY, newColor.getRGB()); // change current pixel to new color
+			if (currentX + 1 < image.getWidth() && oldColor.equals(new Color(image.getRGB(currentX + 1, currentY))))
+			{
+				stack.add(new Point(currentX + 1, currentY));
+			}
+			if (currentX - 1 > 0 && oldColor.equals(new Color(image.getRGB(currentX - 1, currentY))))
+			{
+				stack.add(new Point(currentX - 1, currentY));
+			}
+			if (currentY + 1 < image.getHeight() && oldColor.equals(new Color(image.getRGB(currentX, currentY + 1))))
+			{
+				stack.add(new Point(currentX, currentY + 1));
+			}
+			if (currentY - 1 > 0 && oldColor.equals(new Color(image.getRGB(currentX, currentY - 1))))
+			{
+				stack.add(new Point(currentX, currentY - 1));
+			}
+		}
+		canvas.repaint();
 	}
 
 	private void floodFillScanLine(int x, int y, Color oldColor, Color newColor, BufferedImage image)
@@ -47,12 +94,12 @@ public class BucketFillDrawListener implements DrawListener
 			int currentY = (int) p.getY();
 
 			y1 = currentY;
-			//while (y1 >= 0 && oldColor.equals(new Color(image.getRGB(currentX, y1))))
+			while (y1 >= 0 && oldColor.equals(new Color(image.getRGB(currentX, y1))))
 			// seek up to highest point of same color
-			//{
-			//	y1--;
-			//}
-			//y1++; // went one row too high which caused loop to break, so go back to the last "good" point
+			{
+				y1--;
+			}
+			y1++; // went one row too high which caused loop to break, so go back to the last "good" point
 
 			spanLeft = spanRight = false;
 			int width = image.getWidth();

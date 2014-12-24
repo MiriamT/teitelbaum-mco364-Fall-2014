@@ -36,7 +36,7 @@ public class ClearListener implements ActionListener
 	public void sendMessageToServer()
 	{
 		BufferedImage image = canvas.getImage();
-		String stringMessage = new ClearMessage(image.getWidth(), image.getHeight()).toString();
+		String stringMessage = new ClearMessage(canvas).toString();
 		writer.print(stringMessage);
 		writer.flush();
 	}

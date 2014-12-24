@@ -37,7 +37,7 @@ public class PaintMessageFactory
 		}
 		catch(Exception e)
 		{
-			
+			e.printStackTrace();
 		}
 
 		return message;

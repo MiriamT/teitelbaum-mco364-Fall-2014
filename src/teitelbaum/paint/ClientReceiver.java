@@ -45,17 +45,17 @@ public class ClientReceiver extends Thread
 			// establish the connection
 			 socket = new Socket("192.168.117.107", 3773);
 			//socket = new Socket("localhost", 3773);
-
+			 
 			// should only have 1 instance of printwriter, so sending it to directly to toolListener and clearListener
 
 			PrintWriter writer = new PrintWriter(socket.getOutputStream());
 
 			toolListener.setPrintWriter(writer);
 			clearListener.setPrintWriter(writer);
-
+			
 			InputStream in = socket.getInputStream(); // should be the only in stream
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-
+			
 			String messageString;
 			while ((messageString = reader.readLine()) != null)
 			{

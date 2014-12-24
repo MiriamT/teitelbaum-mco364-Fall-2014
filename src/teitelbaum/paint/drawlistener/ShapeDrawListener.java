@@ -15,13 +15,11 @@ public abstract class ShapeDrawListener implements DrawListener
 	protected Point startPt, currentPt;
 	protected int x, y, width, height;
 	protected ToolListener toolListener;
-	protected PaintMessageFactory messageFactory;
 
 	public ShapeDrawListener(Canvas canvas, ToolListener toolListener)
 	{
 		this.canvas = canvas;
 		this.toolListener = toolListener;
-		messageFactory = new PaintMessageFactory(canvas);
 	}
 
 	public abstract void sendMessageToServer();

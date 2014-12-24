@@ -17,21 +17,29 @@ public class PaintMessageFactory
 	{
 		Scanner s = new Scanner(string);
 		PaintMessage message = null;
-		switch (PaintMessageType.valueOf(s.next()))
+		try
 		{
-		case LINE:
-			message = new LineMessage(s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt());
-			break;
-		case SHAPE:
-			message = new ShapeMessage(Shape.valueOf(s.next()), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), Boolean.valueOf(s.next()));
-			break;
-		case CLEAR:
-			message = new ClearMessage(canvas);
-			break;
-		case BUCKET_FILL:
-			message = new BucketFillMessage(s.nextInt(), s.nextInt(), s.nextInt(), canvas);
-			break;
+			switch (PaintMessageType.valueOf(s.next()))
+			{
+			case LINE:
+				message = new LineMessage(s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt());
+				break;
+			case SHAPE:
+				message = new ShapeMessage(Shape.valueOf(s.next()), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), Boolean.valueOf(s.next()));
+				break;
+			case CLEAR:
+				message = new ClearMessage(canvas);
+				break;
+			case BUCKET_FILL:
+				message = new BucketFillMessage(s.nextInt(), s.nextInt(), s.nextInt(), canvas);
+				break;
+			}
 		}
+		catch(Exception e)
+		{
+			
+		}
+
 		return message;
 	}
 }

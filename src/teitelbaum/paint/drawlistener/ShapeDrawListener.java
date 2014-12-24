@@ -21,7 +21,7 @@ public abstract class ShapeDrawListener implements DrawListener
 	{
 		this.canvas = canvas;
 		this.toolListener = toolListener;
-		messageFactory = new PaintMessageFactory();
+		messageFactory = new PaintMessageFactory(canvas);
 	}
 
 	public abstract void sendMessageToServer();

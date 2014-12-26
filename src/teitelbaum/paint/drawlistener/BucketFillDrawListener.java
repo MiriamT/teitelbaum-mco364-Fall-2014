@@ -77,7 +77,17 @@ public class BucketFillDrawListener implements DrawListener
 	{
 		if (oldColor.equals(newColor))
 		{
-			return;
+			if (!oldColor.equals(Color.BLACK))
+			{
+				return;
+			}
+			else
+			// black is a special case because transparent is also equal to black
+			{
+				// correct by first filling in white to get rid of transparency, then fill black
+				floodFillScanLine(x, y, Color.BLACK, Color.WHITE, image);
+				oldColor = Color.WHITE;
+			}
 		}
 
 		Stack<Point> stack = new Stack<>();
@@ -156,7 +166,6 @@ public class BucketFillDrawListener implements DrawListener
 				try
 				// for debugging, delete try when solved
 				{
-
 					image.setRGB(x, y, newColor.getRGB());
 					floodFillRecursion(x + 1, y, oldColor, newColor, image); // right
 					floodFillRecursion(x - 1, y, oldColor, newColor, image); // left

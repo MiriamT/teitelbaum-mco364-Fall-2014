@@ -41,13 +41,15 @@ public class Canvas extends JComponent
 	{
 		super.paintComponent(g);
 
-		for (BufferedImage image : images)
+		for (int i = 0; i < 4; i++)
 		{
-			g.drawImage(image, 0, 0, null);
+			g.drawImage(images[i], 0, 0, null);
+			if (i == currentLayer)
+			{
+				graphicsAttributes.updateGraphicsSettings((Graphics2D) g);
+				listener.drawPreview((Graphics2D) g);
+			}
 		}
-
-		graphicsAttributes.updateGraphicsSettings((Graphics2D) g);
-		listener.drawPreview((Graphics2D) g);
 		gui.repaint();
 	}
 
@@ -60,9 +62,11 @@ public class Canvas extends JComponent
 			graphics.fillRect(0, 0, images[layer].getWidth(), images[layer].getHeight());
 		}
 		else
-		// all others transparent
+		// all others transparent, but need white color to make bucketfill work properly
 		{
+			// graphics.setPaint(new Color(255, 255, 255, 1));
 			graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.CLEAR));
+			graphics.setColor(Color.WHITE);
 			graphics.fillRect(0, 0, images[layer].getWidth(), images[layer].getHeight());
 			// reset composite
 			graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));

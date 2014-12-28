@@ -50,7 +50,7 @@ public class Canvas extends JComponent
 				listener.drawPreview((Graphics2D) g);
 			}
 		}
-		gui.repaint();
+		gui.repaint(); //repaint gui so layer previews are updated
 	}
 
 	public void clear(int layer)

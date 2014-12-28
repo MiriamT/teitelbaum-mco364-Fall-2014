@@ -1,13 +1,22 @@
 package teitelbaum.paint;
 
+import java.io.PrintWriter;
+
 import teitelbaum.paint.message.PaintMessage;
 
-public class OnlineNetworkModule implements NetworkModule {
+public class OnlineNetworkModule implements NetworkModule
+{
+	private PrintWriter writer;
 
-	@Override
-	public void sendMessage(PaintMessage message) {
-		
-
+	public OnlineNetworkModule(PrintWriter writer)
+	{
+		this.writer = writer;
 	}
 
+	@Override
+	public void sendMessage(PaintMessage message)
+	{
+		writer.print(message.toString());
+		writer.flush();
+	}
 }

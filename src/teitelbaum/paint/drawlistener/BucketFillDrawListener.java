@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.PrintWriter;
 import java.util.Stack;
 
 import teitelbaum.paint.Canvas;
@@ -29,15 +28,6 @@ public class BucketFillDrawListener implements DrawListener
 	public void draw(Graphics2D g)
 	{
 		floodFillScanLine(x, y, oldColor, canvas.getGraphicsAttributes().getLineColor(), canvas.getImage());
-	}
-
-	@Override
-	public void sendMessageToServer()
-	{
-		String stringMessage = new BucketFillMessage(x, y, canvas.getGraphicsAttributes().getLineColor().getRGB()).toString();
-		PrintWriter writer = toolListener.getPrintWriter();
-		writer.print(stringMessage);
-		writer.flush();
 	}
 
 	private void floodFillScanLine(int x, int y, Color oldColor, Color newColor, BufferedImage image)
@@ -174,16 +164,7 @@ public class BucketFillDrawListener implements DrawListener
 	{
 		x = e.getX();
 		y = e.getY();
-		oldColor = new Color(canvas.getImage().getRGB(x, y));
-		if (toolListener.isConnected())
-		{
-			sendMessageToServer();
-		}
-		else
-		{
-			Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
-			draw(g);
-		}
+		toolListener.getNetworkModule().sendMessage(new BucketFillMessage(x, y, canvas.getGraphicsAttributes().getLineColor().getRGB()));
 	}
 
 	@Override

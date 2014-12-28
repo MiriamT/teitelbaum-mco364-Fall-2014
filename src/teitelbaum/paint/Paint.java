@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import teitelbaum.paint.actionlistener.ChooseColorListener;
 import teitelbaum.paint.actionlistener.ClearListener;
+import teitelbaum.paint.actionlistener.NetworkListener;
 import teitelbaum.paint.actionlistener.ScrollListener;
 import teitelbaum.paint.actionlistener.ToolListener;
 
@@ -42,7 +43,7 @@ public class Paint extends JFrame
 
 		toolbar.add(new JLabel("Choose Draw Type:"));
 		JComboBox toolCombo = new JComboBox(toolTypes);
-		ToolListener toolListener = new ToolListener(canvas, this);
+		ToolListener toolListener = new ToolListener(canvas);
 		toolCombo.addActionListener(toolListener);
 		toolCombo.setSelectedIndex(0);
 		toolbar.add(toolCombo);

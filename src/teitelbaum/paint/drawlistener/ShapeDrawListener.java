@@ -6,7 +6,6 @@ import java.awt.event.MouseEvent;
 
 import teitelbaum.paint.Canvas;
 import teitelbaum.paint.actionlistener.ToolListener;
-import teitelbaum.paint.message.PaintMessageFactory;
 
 public abstract class ShapeDrawListener implements DrawListener
 {
@@ -21,8 +20,6 @@ public abstract class ShapeDrawListener implements DrawListener
 		this.canvas = canvas;
 		this.toolListener = toolListener;
 	}
-
-	public abstract void sendMessageToServer();
 
 	@Override
 	public void mouseClicked(MouseEvent arg0)
@@ -50,23 +47,6 @@ public abstract class ShapeDrawListener implements DrawListener
 		startPt = e.getPoint();
 		currentPt = e.getPoint();
 		canvas.repaint(); // draws the preview cuz preview called inside
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e)
-	{
-		preview = false;
-		if (toolListener.isConnected())
-		{
-			sendMessageToServer();
-		}
-		else
-		{
-			Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
-			canvas.getGraphicsAttributes().updateGraphicsSettings(g);
-			draw(g);
-		}
-
 	}
 
 	@Override

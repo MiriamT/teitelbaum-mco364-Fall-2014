@@ -1,7 +1,7 @@
 package teitelbaum.paint.drawlistener;
 
 import java.awt.Graphics2D;
-import java.io.PrintWriter;
+import java.awt.event.MouseEvent;
 
 import teitelbaum.paint.Canvas;
 import teitelbaum.paint.actionlistener.ToolListener;
@@ -22,13 +22,12 @@ public class LineDrawListener extends ShapeDrawListener
 	}
 
 	@Override
-	public void sendMessageToServer()
+	public void mouseReleased(MouseEvent arg0)
 	{
-		String stringMessage = new LineMessage(startPt.x, startPt.y, currentPt.x, currentPt.y, super.canvas.getGraphicsAttributes().getLineColor().getRGB(), super.canvas.getGraphicsAttributes()
-				.getLineSize()).toString();
-		PrintWriter writer = super.toolListener.getPrintWriter();
-		writer.print(stringMessage);
-		writer.flush();
+		preview = false;
+		LineMessage msg = new LineMessage(startPt.x, startPt.y, currentPt.x, currentPt.y, super.canvas.getGraphicsAttributes().getLineColor().getRGB(), super.canvas.getGraphicsAttributes()
+				.getLineSize());
+		toolListener.getNetworkModule().sendMessage(msg);
 	}
 
 }

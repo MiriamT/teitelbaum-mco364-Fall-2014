@@ -2,7 +2,6 @@ package teitelbaum.paint.drawlistener;
 
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
-import java.io.PrintWriter;
 
 import teitelbaum.paint.Canvas;
 import teitelbaum.paint.actionlistener.ToolListener;
@@ -29,28 +28,13 @@ public class PencilDrawListener implements DrawListener
 	}
 
 	@Override
-	public void sendMessageToServer()
-	{
-		String stringMessage = new LineMessage(x1, y1, x2, y2, canvas.getGraphicsAttributes().getLineColor().getRGB(), canvas.getGraphicsAttributes().getLineSize()).toString();
-		PrintWriter writer = toolListener.getPrintWriter();
-		writer.print(stringMessage);
-		writer.flush();
-	}
-
-	@Override
 	public void mouseDragged(MouseEvent e)
 	{
 		x2 = e.getX();
 		y2 = e.getY();
 
-		if (toolListener.isConnected())
-		{
-			sendMessageToServer();
-		}
-		else
-		{
-			draw((Graphics2D) canvas.getImage().getGraphics());
-		}
+		LineMessage msg = new LineMessage(x1, y1, x2, y2, canvas.getGraphicsAttributes().getLineColor().getRGB(), canvas.getGraphicsAttributes().getLineSize());
+		toolListener.getNetworkModule().sendMessage(msg);
 
 		x1 = x2;
 		y1 = y2;
@@ -89,14 +73,8 @@ public class PencilDrawListener implements DrawListener
 		x1 = x2 = e.getX();
 		y1 = y2 = e.getY();
 		// lets u draw dots by clicking
-		if (toolListener.isConnected())
-		{
-			sendMessageToServer();
-		}
-		else
-		{
-			draw((Graphics2D) canvas.getImage().getGraphics());
-		}
+		LineMessage msg = new LineMessage(x1, y1, x2, y2, canvas.getGraphicsAttributes().getLineColor().getRGB(), canvas.getGraphicsAttributes().getLineSize());
+		toolListener.getNetworkModule().sendMessage(msg);
 	}
 
 	@Override

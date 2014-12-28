@@ -2,12 +2,11 @@ package teitelbaum.paint.actionlistener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.PrintWriter;
 
 import javax.swing.JComboBox;
 
 import teitelbaum.paint.Canvas;
-import teitelbaum.paint.Paint;
+import teitelbaum.paint.NetworkModule;
 import teitelbaum.paint.drawlistener.BucketFillDrawListener;
 import teitelbaum.paint.drawlistener.CircleDrawListener;
 import teitelbaum.paint.drawlistener.CircleFillDrawListener;
@@ -19,14 +18,11 @@ import teitelbaum.paint.drawlistener.RectangleDrawListener;
 public class ToolListener implements ActionListener
 {
 	private Canvas canvas;
-	private PrintWriter writer;
-	private Paint paint;
-	private boolean connected;
+	private NetworkModule networkMod;
 
-	public ToolListener(Canvas canvas, Paint paint)
+	public ToolListener(Canvas canvas)
 	{
 		this.canvas = canvas;
-		this.paint = paint;
 	}
 
 	@Override
@@ -61,23 +57,13 @@ public class ToolListener implements ActionListener
 		}
 	}
 
-	public void setPrintWriter(PrintWriter writer)
+	public NetworkModule getNetworkModule()
 	{
-		this.writer = writer;
+		return networkMod;
 	}
 
-	public PrintWriter getPrintWriter()
+	public void setNetworkModule(NetworkModule netMod)
 	{
-		return writer;
-	}
-
-	public void setConnected(boolean connected)
-	{
-		this.connected = connected;
-	}
-
-	public boolean isConnected()
-	{
-		return connected;
+		networkMod = netMod;
 	}
 }

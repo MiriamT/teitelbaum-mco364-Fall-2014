@@ -84,9 +84,21 @@ public class BucketFillDrawListener implements DrawListener
 			else
 			// black is a special case because transparent is also equal to black
 			{
+				boolean transparent = new Color(image.getRGB(x, y), true).getAlpha() == 0;
+				if (transparent)
+				{
+					floodFillScanLineTransparentToBlack(x, y, image);
+					return;
+				}
+				else
+				// color is actually black, so return because same
+				{
+					return;
+				}
+
 				// correct by first filling in white to get rid of transparency, then fill black
-				floodFillScanLine(x, y, Color.BLACK, Color.WHITE, image);
-				oldColor = Color.WHITE;
+				// floodFillScanLine(x, y, Color.BLACK, Color.WHITE, image);
+				// oldColor = Color.WHITE;
 			}
 		}
 
@@ -150,6 +162,72 @@ public class BucketFillDrawListener implements DrawListener
 			}
 		}
 		canvas.repaint();
+	}
+
+	private void floodFillScanLineTransparentToBlack(int x, int y, BufferedImage image)
+	{
+		Color black = Color.BLACK;
+
+		Stack<Point> stack = new Stack<>();
+
+		int y1;
+		boolean spanLeft, spanRight;
+
+		stack.push(new Point(x, y));
+
+		while (!stack.isEmpty())
+		{
+			Point p = stack.pop();
+			int currentX = (int) p.getX();
+			int currentY = (int) p.getY();
+
+			y1 = currentY;
+			while (y1 >= 0 && new Color(image.getRGB(currentX, y1), true).getAlpha() == 0)
+			// seek up to highest transparent point
+			{
+				y1--;
+			}
+			y1++; // went one row too high which caused loop to break, so go back to the last "good" point
+
+			spanLeft = spanRight = false;
+			int width = image.getWidth();
+			int height = image.getHeight();
+
+			while (y1 < height && new Color(image.getRGB(currentX, y1), true).getAlpha() == 0)
+			// scan down to lowest transparent point
+			{
+				image.setRGB(currentX, y1, black.getRGB()); // change current pixel to black, nontransparent
+
+				if (!spanLeft && currentX > 0 && new Color(image.getRGB(currentX - 1, y1), true).getAlpha() == 0)
+				// if point to the left is transparent
+				{
+					stack.push(new Point(currentX - 1, y1));
+					spanLeft = true;
+				}
+				else if (spanLeft && currentX > 0 && !(new Color(image.getRGB(currentX - 1, y1), true).getAlpha() == 0))
+				// if spanLeft is true, but we havnt reached the left edge of image yet and current pixel is not transparent,
+				// then set spanLeft false, since transparent might occur again farther left
+				{
+					spanLeft = false;
+				}
+
+				if (!spanRight && currentX < width - 1 && new Color(image.getRGB(currentX + 1, y1), true).getAlpha() == 0)
+				// if transparent point exists to the left
+				{
+					stack.push(new Point(currentX + 1, y1));
+					spanRight = true;
+				}
+				else if (spanRight && currentX < width - 1 && !(new Color(image.getRGB(currentX + 1, y1), true).getAlpha() == 0))
+				// if spanRight is true, but we havnt reached the right edge of image yet and current pixel is not transparent,
+				// then set spanRight false, since transparent might occur again farther right
+				{
+					spanRight = false;
+				}
+				y1++;
+			}
+		}
+		canvas.repaint();
+
 	}
 
 	private void floodFillRecursion(int x, int y, Color oldColor, Color newColor, BufferedImage image) // stackoverflows - BAD

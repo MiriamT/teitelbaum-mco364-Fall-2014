@@ -50,8 +50,8 @@ public class ClientReceiver extends Thread
 		try
 		{
 			// establish the connection
-			// socket = new Socket("192.168.117.107", 3773);
-			socket = new Socket("localhost", 3773);
+			socket = new Socket("192.168.117.107", 3773);
+			//socket = new Socket("localhost", 3773);
 
 			// should only have 1 instance of printwriter, so sending it to directly to toolListener and clearListener
 
@@ -66,16 +66,24 @@ public class ClientReceiver extends Thread
 			String messageString;
 			while ((messageString = reader.readLine()) != null && connected)
 			{
-				if (!messageString.equals("")) // need to check for "" because we append \n to toString and flush also
-												// sends \n
+				try
 				{
-					PaintMessage message = paintFactory.getMessage(messageString);
-					if (message != null)
-					{
-						message.apply((Graphics2D) canvas.getImage().getGraphics());
-						canvas.repaint();
-					}
+					//if (!messageString.equals("")) // need to check for "" because we append \n to toString and flush also
+						// sends \n
+					//{
+						PaintMessage message = paintFactory.getMessage(messageString);
+						//if (message != null)
+						//{
+							message.apply((Graphics2D) canvas.getImage().getGraphics());
+							canvas.repaint();
+						//}
+					//}
 				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+				
 			}
 		}
 		catch (SocketException e)
